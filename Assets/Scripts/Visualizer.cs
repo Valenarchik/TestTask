@@ -100,7 +100,7 @@ public class Visualizer : MonoBehaviour
 
     private static Vector3 ExtractPosition(Matrix4x4 m)
     {
-        return new Vector3(m.m03, m.m13, m.m23);
+        return m.GetColumn(3);
     }
 
     private static Quaternion ExtractRotation(Matrix4x4 m)
