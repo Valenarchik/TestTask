@@ -4,6 +4,9 @@ using System.Linq;
 using Newtonsoft.Json;
 using UnityEngine;
 
+/// <summary>
+/// Простой скрипт, который ищет все смещения модели (без сложной архитектеры, так как она не требуется)
+/// </summary>
 public class Solution : MonoBehaviour
 {
     [SerializeField] private TextAsset modelJson;
@@ -49,7 +52,7 @@ public class Solution : MonoBehaviour
             {
                 var transformed = offset * model[i];
 
-                if (!ExistsInSpace(transformed, space))
+                if (!transformed.ExistIn(space, matrixEpsilon))
                 {
                     valid = false;
                     break;
@@ -61,24 +64,6 @@ public class Solution : MonoBehaviour
         }
 
         return results;
-    }
-
-    private bool ExistsInSpace(Matrix4x4 target, Matrix4x4[] space)
-    {
-        foreach (var s in space)
-        {
-            if (MatrixApproximately(s, target, matrixEpsilon))
-                return true;
-        }
-        return false;
-    }
-
-    private bool MatrixApproximately(Matrix4x4 a, Matrix4x4 b, float eps = 1e-3f)
-    {
-        for (var i = 0; i < 16; i++)
-            if (Mathf.Abs(a[i] - b[i]) > eps)
-                return false;
-        return true;
     }
     
     private void ExportOffsets(List<Matrix4x4> offsets)
