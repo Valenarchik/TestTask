@@ -66,9 +66,9 @@ public class Visualizer : MonoBehaviour
     {
         foreach (var offset in _offsets)
         {
+            ResetModel();
             ApplyOffset(offset);
             yield return new WaitForSeconds(stepDelay);
-            ResetModel();
         }
     }
     
